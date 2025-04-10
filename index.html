@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NummStudio | Creative Design Agency</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #FF3E6C;
+            --secondary: #8A4FFF;
+            --accent: #00D9C6;
+            --light: #FFFFFF;
+            --background: #F9FAFC;
+            --text: #31343C;
+            --light-gray: #F0F2F5;
+            --medium-gray: #E1E4EA;
+            --transition: all 0.4s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        .background-logo {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 600px; /* Adjust the width as needed */
+            height: 600px; /* Adjust the height as needed */
+            background-image: url('./logo2.png'); /* Replace with the actual path to your logo */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: top right;
+            z-index: -1; /* Ensure it stays behind other elements */
+            opacity: 1; /* Adjust opacity for a subtle effect */
+        }
+        
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.1s ease;
+        }
+        
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FFF6F9 0%, #F0F5FF 100%);
+        }
+        
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 100px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            width: 90%;
+            max-width: 1200px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 75px;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary) 50%, var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            overflow: hidden;
+        }
+        
+        .hero h1 .line {
+            display: block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        
+        .hero h1 .highlight {
+            position: relative;
+        }
+        
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 25%;
+            background: rgba(138, 79, 255, 0.2);
+            bottom: 5px;
+            left: 0;
+            z-index: -1;
+            border-radius: 10px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .cta-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: var(--light);
+            border: none;
+            padding: 16px 35px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: 0 10px 20px rgba(255, 62, 108, 0.25);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(255, 62, 108, 0.35);
+        }
+        
+        .hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.shape-1 {
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 62, 108, 0.25); /* Darker pink */
+    top: 10%;
+    right: 5%;
+    animation: float 8s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 150px;
+    height: 150px;
+    background: rgba(138, 79, 255, 0.25); /* Darker purple */
+    bottom: 15%;
+    left: 10%;
+    animation: float 9s ease-in-out infinite 1s;
+}
+
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 217, 198, 0.25); /* Darker teal */
+    top: 25%;
+    left: 15%;
+    animation: float 7s ease-in-out infinite 0.5s;
+}
+    
+        
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            color: var(--text);
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+            color: #5A5E67;
+        }
+        
+        .services {
+            background: var(--background);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 40px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .service-card:hover .service-icon {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .service-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            color: var(--secondary);
+        }
+        
+        .service-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .service-card p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #5A5E67;
+        }
+        
+        .portfolio {
+            background: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255, 62, 108, 0.05);
+            top: -250px;
+            left: -100px;
+        }
+
+        .portfolio::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(138, 79, 255, 0.05);
+            bottom: -200px;
+            right: -100px;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 300px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 62, 108, 0.9), rgba(138, 79, 255, 0.9));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay h4 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            transform: translateY(20px);
+            transition: var(--transition);
+            transition-delay: 0.1s;
+            opacity: 0;
+            color: var(--light);
+        }
+        
+        .portfolio-overlay p {
+            font-size: 16px;
+            text-align: center;
+            transform: translateY(20px);
+            transition: var(--transition);
+            transition-delay: 0.2s;
+            opacity: 0;
+            color: var(--light);
+        }
+        
+        .portfolio-item:hover .portfolio-overlay h4,
+        .portfolio-item:hover .portfolio-overlay p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .pricing {
+            background: var(--background);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: translateY(-10px);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Popular';
+            position: absolute;
+            top: 0;
+            right: 30px;
+            background: var(--primary);
+            color: var(--light);
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .pricing-card .price {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .pricing-card .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5A5E67;
+        }
+        
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .pricing-card ul li {
+            margin-bottom: 15px;
+            font-size: 16px;
+            position: relative;
+            padding-left: 30px;
+            color: #5A5E67;
+        }
+        
+        .pricing-card ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .pricing-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .pricing-card.featured .pricing-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: var(--light);
+            border: none;
+            box-shadow: 0 10px 20px rgba(255, 62, 108, 0.25);
+        }
+        
+        .pricing-btn:hover {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: var(--light);
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(255, 62, 108, 0.25);
+        }
+        
+        .testimonials {
+            background: linear-gradient(135deg, #FFF6F9 0%, #F0F5FF 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(0, 217, 198, 0.05);
+            top: -150px;
+            right: -150px;
+        }
+        
+        .testimonial-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 20px;
+        }
+        
+        .testimonial-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 120px;
+            color: var(--primary);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+            line-height: 0;
+        }
+        
+        .testimonial-content {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            color: #5A5E67;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .testimonial-info h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+        
+        .testimonial-info p {
+            font-size: 14px;
+            color: #5A5E67;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 15px;
+        }
+        
+        .slider-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            color: var(--text);
+        }
+        
+        .slider-btn:hover {
+            background: var(--primary);
+            color: var(--light);
+            box-shadow: 0 10px 20px rgba(255, 62, 108, 0.25);
+        }
+        
+        .contact {
+            background: var(--background);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(138, 79, 255, 0.05);
+            bottom: -150px;
+            left: -100px;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-info {
+            margin-bottom: 40px;
+        }
+        
+        .contact-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 20px;
+            color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .contact-detail:hover .contact-icon {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: var(--light);
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(255, 62, 108, 0.25);
+        }
+        
+        .contact-text h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+        
+        .contact-text p {
+            font-size: 16px;
+            color: #5A5E67;
+        }
+        
+        .contact-form {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            background: var(--light-gray);
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 16px;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            background: var(--medium-gray);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 62, 108, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: var(--light);
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(255, 62, 108, 0.25);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(255, 62, 108, 0.35);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #31343C 0%, #262A35 100%);
+            padding: 80px 0 30px;
+            position: relative;
+            color: var(--light);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .footer-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #B0B5BD;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #B0B5BD;
+            text-decoration: none;
+            font-size: 16px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .footer-newsletter p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #B0B5BD;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 30px 0 0 30px;
+            padding: 12px 15px;
+            font-size: 14px;
+            color: var(--light);
+        }
+        
+        .newsletter-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: var(--light);
+            border: none;
+            border-radius: 0 30px 30px 0;
+            padding: 0 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-btn:hover {
+            background: var(--accent);
+        }
+        
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: #B0B5BD;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            z-index: 999;
+            opacity: 0;
+            transition: var(--transition);
+            font-size: 20px;
+            box-shadow: 0 10px 20px rgba(255, 62, 108, 0.25);
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(255, 62, 108, 0.35);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .nav {
+                padding: 20px 40px;
+            }
+            
+            .nav.scrolled {
+                padding: 15px 40px;
+            }
+            
+            .hero h1 {
+                font-size: 60px;
+            }
+            
+            .section-title {
+                font-size: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav {
+                padding: 20px 30px;
+            }
+            
+            .nav.scrolled {
+                padding: 15px 30px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 30px;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <nav class="nav">
+        <a href="#" class="logo">Numm<span>Studio</span></a>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+    
+    <header>
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="hero">
+            <div class="background-logo"></div>
+            <h1>
+                <span class="line">We transform</span>
+                <span class="line"><span class="highlight">visions</span> into</span>
+                <span class="line">vibrant <span class="highlight">realities</span>.</span>
+            </h1>
+            <p>NummStudio is a creative design agency that combines artistic innovation with strategic thinking to create designs that inspire, engage, and deliver results.</p>
+            <a href="#contact" class="cta-btn">Start Your Project</a>
+        </div>
+    </header>
+    
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">We offer comprehensive design solutions tailored to your unique needs and business goals</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Brand Identity</h3>
+                    <p>We create distinctive visual identities that capture your brand's essence and resonate with your target audience, ensuring you stand out in a crowded marketplace.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Web Design</h3>
+                    <p>Our web designs blend stunning visuals with intuitive user experiences, creating websites that not only look beautiful but drive engagement and conversions.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Apps</h3>
+                    <p>We design user-centric mobile experiences that feel natural and engaging, ensuring your app is both visually appealing and functionally seamless.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <h3>Illustration</h3>
+                    <p>Our custom illustrations bring your ideas to life with unique visuals that enhance your brand storytelling and create emotional connections with your audience.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-photo-video"></i>
+                    </div>
+                    <h3>Motion Graphics</h3>
+                    <p>We create dynamic motion graphics and animations that captivate viewers, simplify complex ideas, and make your content more engaging and memorable.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Marketing Collateral</h3>
+                    <p>From brochures to social media campaigns, we design cohesive marketing materials that effectively communicate your message and drive customer action.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 class="section-title">Our Portfolio</h2>
+            <p class="section-subtitle">Explore our creative works and see how we've helped brands transform their visions into reality</p>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/400" alt="Brand Design Project">
+                    <div class="portfolio-overlay">
+                        <h4>Lumina Brand Redesign</h4>
+                        <p>A complete brand overhaul for a tech startup that increased brand recognition by 45%</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/400" alt="Website Design Project">
+                    <div class="portfolio-overlay">
+                        <h4>Bloom E-commerce Platform</h4>
+                        <p>An intuitive shopping experience that boosted conversions by 30%</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/400" alt="Mobile App Design">
+                    <div class="portfolio-overlay">
+                        <h4>Pulse Health App</h4>
+                        <p>A wellness application with vibrant UI that increased user engagement by 50%</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/400" alt="Illustration Project">
+                    <div class="portfolio-overlay">
+                        <h4>Novus Book Series</h4>
+                        <p>Custom illustrations for an award-winning science fiction anthology</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/400" alt="Branding Project">
+                    <div class="portfolio-overlay">
+                        <h4>Zenith Coffee Branding</h4>
+                        <p>A comprehensive brand identity for a specialty coffee chain</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/400" alt="Marketing Campaign">
+                    <div class="portfolio-overlay">
+                        <h4>Solstice Summer Campaign</h4>
+                        <p>A vibrant marketing campaign that increased seasonal sales by 60%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Our Pricing</h2>
+            <p class="section-subtitle">Transparent and flexible pricing options to fit your project needs and budget</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">$1,299<span>/project</span></div>
+                    <ul>
+                        <li>Brand Logo Design</li>
+                        <li>3 Design Concepts</li>
+                        <li>2 Revision Rounds</li>
+                        <li>Basic Style Guide</li>
+                        <li>Source Files Included</li>
+                        <li>14-Day Delivery</li>
+                    </ul>
+                    <a href="#contact" class="pricing-btn">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">$2,499<span>/project</span></div>
+                    <ul>
+                        <li>Full Brand Identity</li>
+                        <li>5 Design Concepts</li>
+                        <li>Unlimited Revisions</li>
+                        <li>Comprehensive Style Guide</li>
+                        <li>Social Media Kit</li>
+                        <li>Business Card Design</li>
+                        <li>10-Day Delivery</li>
+                    </ul>
+                    <a href="#contact" class="pricing-btn">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$4,999<span>/project</span></div>
+                    <ul>
+                        <li>Complete Design Suite</li>
+                        <li>Website Design & Development</li>
+                        <li>Full Brand Strategy</li>
+                        <li>Marketing Collateral</li>
+                        <li>Dedicated Project Manager</li>
+                        <li>Priority Support</li>
+                        <li>7-Day Delivery</li>
+                    </ul>
+                    <a href="#contact" class="pricing-btn">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Client Testimonials</h2>
+            <p class="section-subtitle">Don't just take our word for it - hear what our clients have to say</p>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "NummStudio completely transformed our brand identity. Their creative approach and attention to detail exceeded our expectations. We've seen a significant increase in customer engagement since launching our new look."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="/api/placeholder/60/60" alt="Sarah Johnson">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>CEO, Lumina Tech</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "Working with NummStudio was an absolute pleasure. They took the time to understand our vision and translated it into a website that perfectly represents our brand. Their creative process was smooth and professional."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="/api/placeholder/60/60" alt="Michael Chang">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Michael Chang</h4>
+                                <p>Founder, Bloom Shop</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "NummStudio's design work for our app completely revolutionized our user experience. Their innovative approach helped us stand out in a crowded marketplace and significantly improved our user retention rates."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="/api/placeholder/60/60" alt="Emma Rodriguez">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Emma Rodriguez</h4>
+                                <p>Product Manager, Pulse Health</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn prev-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="slider-btn next-btn">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">Ready to start your project? Contact us today and let's create something amazing together</p>
+            <div class="contact-container">
+                <div>
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <div class="contact-detail">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Our Location</h4>
+                                <p>123 Creative Avenue, Design District, NY 10001</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Phone Number</h4>
+                                <p>+1 (555) 234-5678</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email Address</h4>
+                                <p>hello@nummstudio.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Working Hours</h4>
+                                <p>Monday - Friday: 9am - 6pm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Your Message"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="#" class="footer-logo">Numm<span>Studio</span></a>
+                    <p class="footer-text">We're a creative design agency passionate about transforming ideas into impactful visual experiences that help brands thrive in the digital world.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#services">Brand Identity</a></li>
+                        <li><a href="#services">Web Design</a></li>
+                        <li><a href="#services">Mobile Apps</a></li>
+                        <li><a href="#services">Illustration</a></li>
+                        <li><a href="#services">Motion Graphics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p>Subscribe to our newsletter to receive updates, news, and exclusive offers.</p>
+                    <div class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your Email">
+                        <button class="newsletter-btn">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 NummStudio. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1
+            });
+            
+            gsap.to(cursorFollower, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.3
+            });
+        });
+        
+        // Links hover effect
+        const links = document.querySelectorAll('a, button');
+        
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                gsap.to(cursor, {
+                    scale: 1.5,
+                    duration: 0.3
+                });
+                gsap.to(cursorFollower, {
+                    scale: 0,
+                    duration: 0.3
+                });
+            });
+            
+            link.addEventListener('mouseleave', () => {
+                gsap.to(cursor, {
+                    scale: 1,
+                    duration: 0.3
+                });
+                gsap.to(cursorFollower, {
+                    scale: 1,
+                    duration: 0.3
+                });
+            });
+        });
+        
+        // Hero animations
+        window.addEventListener('load', () => {
+            const heroLines = document.querySelectorAll('.hero h1 .line');
+            const heroPara = document.querySelector('.hero p');
+            const heroBtn = document.querySelector('.hero .cta-btn');
+            
+            gsap.to(heroLines, {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: 'power3.out',
+                delay: 0.5
+            });
+            
+            gsap.to(heroPara, {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                delay: 1.2,
+                ease: 'power3.out'
+            });
+            
+            gsap.to(heroBtn, {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                delay: 1.4,
+                ease: 'power3.out'
+            });
+        });
+        
+        // Scroll animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray('.service-card').forEach(card => {
+            gsap.from(card, {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+        
+        gsap.utils.toArray('.portfolio-item').forEach(item => {
+            gsap.from(item, {
+                scale: 0.9,
+                opacity: 0,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+        
+        gsap.utils.toArray('.pricing-card').forEach(card => {
+            gsap.from(card, {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+        
+        // Testimonial slider
+        const slider = document.querySelector('.testimonial-slider');
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        
+        let currentSlide = 0;
+        const slideWidth = 100; // percentage
+        
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide > 0) ? currentSlide - 1 : slides.length - 1;
+            updateSlider();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide < slides.length - 1) ? currentSlide + 1 : 0;
+            updateSlider();
+        });
+        
+        // Auto slide
+        setInterval(() => {
+            currentSlide = (currentSlide < slides.length - 1) ? currentSlide + 1 : 0;
+            updateSlider();
+        }, 5000);
+        
+        // Navbar scroll effect
+        const nav = document.querySelector('.nav');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                if (this.getAttribute('href') !== '#') {
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
