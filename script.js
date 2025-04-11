@@ -42,10 +42,34 @@ links.forEach(link => {
         });
     });
 });
+
+window.addEventListener('load', () => {
+    const heroLines = document.querySelectorAll('.hero h1 .line');
+    const heroPara = document.querySelector('.hero p');
+    const heroBtn = document.querySelector('.hero .cta-btn');
+    gsap.to(heroPara, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 1.2,
+        ease: 'power3.out'
+    });
+
+    gsap.to(heroBtn, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 1.4,
+        ease: 'power3.out'
+    });
+});
+
 const slider = document.querySelector('.testimonial-slider');
 const slides = document.querySelectorAll('.testimonial-slide');
 const prevBtn = document.querySelector('.prev-btn');
 const nextBtn = document.querySelector('.next-btn');
+
+
 
 let currentSlide = 0;
 const slideWidth = 100;
