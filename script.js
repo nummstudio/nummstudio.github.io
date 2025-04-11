@@ -108,7 +108,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+emailjs.init('FTjPZ4K2o8Dg4BQBb');;
 
 document.getElementById('contact-form').addEventListener('submit', async function (e) {
     e.preventDefault();
