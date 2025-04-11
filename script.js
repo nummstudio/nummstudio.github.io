@@ -113,9 +113,18 @@ emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
 document.getElementById('contact-form').addEventListener('submit', async function (e) {
     e.preventDefault();
 
+    const submitButton = document.querySelector('.submit-btn');
+    const originalButtonText = submitButton.innerHTML;
+
+    // Add loader to the button
+    submitButton.innerHTML = '<span class="loader"></span> Sending...';
+    submitButton.disabled = true;
+
     const recaptchaResponse = grecaptcha.getResponse();
     if (!recaptchaResponse) {
         alert('Please complete the reCAPTCHA to proceed.');
+        submitButton.innerHTML = originalButtonText; // Reset button text
+        submitButton.disabled = false;
         return;
     }
 
@@ -123,23 +132,33 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     const email = document.getElementById('email').value;
     const subject = document.getElementById('subject').value;
     const message = document.getElementById('message').value;
-    const response = await fetch('https://nummstudio.up.railway.app/api/contact/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name,
-            email,
-            subject,
-            message,
-            recaptcha_response: recaptchaResponse
-        })
-    });
 
-    if (response.ok) {
-        alert('Message sent successfully!');
-        grecaptcha.reset();
-    } else {
-        const errorData = await response.json();
-        alert(errorData.error || 'Failed to send message. Please try again later.');
+    try {
+        const response = await fetch('https://nummstudio.up.railway.app/api/contact/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name,
+                email,
+                subject,
+                message,
+                recaptcha_response: recaptchaResponse
+            })
+        });
+
+        if (response.ok) {
+            alert('Message sent successfully!');
+            document.getElementById('contact-form').reset(); // Reset the form
+            grecaptcha.reset(); // Reset reCAPTCHA
+        } else {
+            const errorData = await response.json();
+            alert(errorData.error || 'Failed to send message. Please try again later.');
+        }
+    } catch (error) {
+        alert('An error occurred. Please try again later.');
+    } finally {
+        // Reset button text and state
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
     }
 });
