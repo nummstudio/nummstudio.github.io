@@ -67,46 +67,46 @@
         });
         
         // Scroll animations
-        gsap.registerPlugin(ScrollTrigger);
+        // gsap.registerPlugin(ScrollTrigger);
         
-        gsap.utils.toArray('.service-card').forEach(card => {
-            gsap.from(card, {
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        });
+        // gsap.utils.toArray('.service-card').forEach(card => {
+        //     gsap.from(card, {
+        //         y: 50,
+        //         opacity: 0,
+        //         duration: 1,
+        //         scrollTrigger: {
+        //             trigger: card,
+        //             start: 'top 80%',
+        //             toggleActions: 'play none none none'
+        //         }
+        //     });
+        // });
         
-        gsap.utils.toArray('.portfolio-item').forEach(item => {
-            gsap.from(item, {
-                scale: 0.9,
-                opacity: 0,
-                duration: 0.8,
-                scrollTrigger: {
-                    trigger: item,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        });
+        // gsap.utils.toArray('.portfolio-item').forEach(item => {
+        //     gsap.from(item, {
+        //         scale: 0.9,
+        //         opacity: 0,
+        //         duration: 0.8,
+        //         scrollTrigger: {
+        //             trigger: item,
+        //             start: 'top 80%',
+        //             toggleActions: 'play none none none'
+        //         }
+        //     });
+        // });
         
-        gsap.utils.toArray('.pricing-card').forEach(card => {
-            gsap.from(card, {
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        });
+        // gsap.utils.toArray('.pricing-card').forEach(card => {
+        //     gsap.from(card, {
+        //         y: 50,
+        //         opacity: 0,
+        //         duration: 1,
+        //         scrollTrigger: {
+        //             trigger: card,
+        //             start: 'top 80%',
+        //             toggleActions: 'play none none none'
+        //         }
+        //     });
+        // });
         
         // Testimonial slider
         const slider = document.querySelector('.testimonial-slider');
