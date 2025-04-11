@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>NummStudio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
+
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-    
+
     <nav class="nav">
-        <a href="#" class="logo" style="display: flex; align-items: center; text-decoration: none;">
-            <img src="logo24.png" alt="NummStudio Logo" style="height: 2em; margin-right: 0.1em;"> 
-            <span style="font-size: 1em; font-weight: bold; color: inherit;">Numm<span>Studio</span></span>
+        <a href="#" class="logo logo-container">
+            <img src="logo24.png" alt="NummStudio Logo" class="logo-image">
+            <span style="font-size: 1em;font-weight: bold;color: inherit;">Numms</span><span>Studio</span></span>
         </a>
         <div class="nav-links">
             <a href="#services">Services</a>
@@ -26,7 +34,7 @@
             <a href="#contact">Contact</a>
         </div>
     </nav>
-    
+
     <header>
         <div class="hero-shapes">
             <div class="shape shape-1"></div>
@@ -40,117 +48,127 @@
                 <span class="line">visions into</span>
                 <span class="line">vibrant realities.</span>
             </h1>
-            <p>NummStudio is a creative design agency that combines artistic innovation with strategic thinking to create designs that inspire, engage, and deliver results.</p>
+            <p>NummStudio is a creative design agency that combines artistic innovation with strategic thinking to
+                create designs that inspire, engage, and deliver results.</p>
             <a href="#contact" class="cta-btn">Start Your Project</a>
         </div>
     </header>
-    
+
     <section id="services" class="services">
         <div class="container">
             <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">We offer comprehensive design solutions tailored to your unique needs and business goals</p>
+            <p class="section-subtitle">We offer comprehensive design solutions tailored to your unique needs and
+                business goals</p>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-paint-brush"></i>
                     </div>
                     <h3>Brand Identity</h3>
-                    <p>We create distinctive visual identities that capture your brand's essence and resonate with your target audience, ensuring you stand out in a crowded marketplace.</p>
+                    <p>We create distinctive visual identities that capture your brand's essence and resonate with your
+                        target audience, ensuring you stand out in a crowded marketplace.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-code"></i>
                     </div>
                     <h3>Web Design</h3>
-                    <p>Our web designs blend stunning visuals with intuitive user experiences, creating websites that not only look beautiful but drive engagement and conversions.</p>
+                    <p>Our web designs blend stunning visuals with intuitive user experiences, creating websites that
+                        not only look beautiful but drive engagement and conversions.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h3>Mobile Apps</h3>
-                    <p>We design user-centric mobile experiences that feel natural and engaging, ensuring your app is both visually appealing and functionally seamless.</p>
+                    <p>We design user-centric mobile experiences that feel natural and engaging, ensuring your app is
+                        both visually appealing and functionally seamless.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-pencil-alt"></i>
                     </div>
                     <h3>Illustration</h3>
-                    <p>Our custom illustrations bring your ideas to life with unique visuals that enhance your brand storytelling and create emotional connections with your audience.</p>
+                    <p>Our custom illustrations bring your ideas to life with unique visuals that enhance your brand
+                        storytelling and create emotional connections with your audience.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-photo-video"></i>
                     </div>
                     <h3>Motion Graphics</h3>
-                    <p>We create dynamic motion graphics and animations that captivate viewers, simplify complex ideas, and make your content more engaging and memorable.</p>
+                    <p>We create dynamic motion graphics and animations that captivate viewers, simplify complex ideas,
+                        and make your content more engaging and memorable.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-bullhorn"></i>
                     </div>
                     <h3>Marketing Collateral</h3>
-                    <p>From brochures to social media campaigns, we design cohesive marketing materials that effectively communicate your message and drive customer action.</p>
+                    <p>From brochures to social media campaigns, we design cohesive marketing materials that effectively
+                        communicate your message and drive customer action.</p>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section id="portfolio" class="portfolio">
         <div class="container">
             <h2 class="section-title">Our Portfolio</h2>
-            <p class="section-subtitle">Explore our creative works and see how we've helped brands transform their visions into reality</p>
+            <p class="section-subtitle">Explore our creative works and see how we've helped brands transform their
+                visions into reality</p>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
-                    <img src="/api/placeholder/400/400" alt="Brand Design Project">
+                    <img src="./lumina.png" alt="Brand Design Project">
                     <div class="portfolio-overlay">
                         <h4>Lumina Brand Redesign</h4>
                         <p>A complete brand overhaul for a tech startup that increased brand recognition by 45%</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="/api/placeholder/400/400" alt="Website Design Project">
+                    <img src="./bloom.png" alt="Website Design Project">
                     <div class="portfolio-overlay">
                         <h4>Bloom E-commerce Platform</h4>
                         <p>An intuitive shopping experience that boosted conversions by 30%</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="/api/placeholder/400/400" alt="Mobile App Design">
+                    <img src="./pulse.png" alt="Mobile App Design">
                     <div class="portfolio-overlay">
                         <h4>Pulse Health App</h4>
                         <p>A wellness application with vibrant UI that increased user engagement by 50%</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="/api/placeholder/400/400" alt="Illustration Project">
+                    <img src="./novus.png" alt="Illustration Project">
                     <div class="portfolio-overlay">
                         <h4>Novus Book Series</h4>
                         <p>Custom illustrations for an award-winning science fiction anthology</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="/api/placeholder/400/400" alt="Branding Project">
+                    <img src="./zenith.png" alt="Branding Project">
                     <div class="portfolio-overlay">
                         <h4>Zenith Coffee Branding</h4>
                         <p>A comprehensive brand identity for a specialty coffee chain</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="/api/placeholder/400/400" alt="Marketing Campaign">
+                    <img src="./summer.png" alt="Marketing Campaign">
                     <div class="portfolio-overlay">
-                        <h4>Solstice  Summer Campaign</h4>
+                        <h4>Solstice Summer Campaign</h4>
                         <p>A vibrant marketing campaign that increased seasonal sales by 60%</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section id="pricing" class="pricing">
         <div class="container">
             <h2 class="section-title">Our Pricing</h2>
-            <p class="section-subtitle">Transparent and flexible pricing options to fit your project needs and budget</p>
+            <p class="section-subtitle">Transparent and flexible pricing options to fit your project needs and budget
+            </p>
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3>Basic</h3>
@@ -199,7 +217,7 @@
             </div>
         </div>
     </section>
-    
+
     <section id="testimonials" class="testimonials">
         <div class="container">
             <h2 class="section-title">Client Testimonials</h2>
@@ -208,7 +226,9 @@
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "NummStudio completely transformed our brand identity. Their creative approach and attention to detail exceeded our expectations. We've seen a significant increase in customer engagement since launching our new look."
+                            "NummStudio completely transformed our brand identity. Their creative approach and attention
+                            to detail exceeded our expectations. We've seen a significant increase in customer
+                            engagement since launching our new look."
                         </div>
                         <div class="testimonial-author">
                             <!-- <div class="testimonial-avatar">
@@ -224,7 +244,9 @@
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "Working with NummStudio was an absolute pleasure. They took the time to understand our vision and translated it into a website that perfectly represents our brand. Their creative process was smooth and professional."
+                            "Working with NummStudio was an absolute pleasure. They took the time to understand our
+                            vision and translated it into a website that perfectly represents our brand. Their creative
+                            process was smooth and professional."
                         </div>
                         <div class="testimonial-author">
                             <!-- <div class="testimonial-avatar">
@@ -240,7 +262,9 @@
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "NummStudio's design work for our app completely revolutionized our user experience. Their innovative approach helped us stand out in a crowded marketplace and significantly improved our user retention rates."
+                            "NummStudio's design work for our app completely revolutionized our user experience. Their
+                            innovative approach helped us stand out in a crowded marketplace and significantly improved
+                            our user retention rates."
                         </div>
                         <div class="testimonial-author">
                             <!-- <div class="testimonial-avatar">
@@ -264,11 +288,12 @@
             </div>
         </div>
     </section>
-    
+
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get in Touch</h2>
-            <p class="section-subtitle">Ready to start your project? Contact us today and let's create something amazing together</p>
+            <p class="section-subtitle">Ready to start your project? Contact us today and let's create something amazing
+                together</p>
             <div class="contact-container">
                 <div>
                     <div class="contact-info">
@@ -297,7 +322,7 @@
                             </div>
                             <div class="contact-text">
                                 <h4>Email Address</h4>
-                                <p>hello@numms.studio</p>
+                                <p>nummstudio@gmail.com</p>
                             </div>
                         </div>
                         <div class="contact-detail">
@@ -312,37 +337,42 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
+                    <form id="contact-form">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Name">
+                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email">
+                            <input type="email" id="email" class="form-control" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Subject">
+                            <input type="text" id="subject" class="form-control" placeholder="Subject" required>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" placeholder="Your Message"></textarea>
+                            <textarea id="message" class="form-control" placeholder="Your Message" required></textarea>
                         </div>
+                        <div class="g-recaptcha" data-sitekey="6LfBRxQrAAAAAJpoBzqYyHaCxj6obHjMODxnNpNP"></div>
                         <button type="submit" class="submit-btn">Send Message</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div>
                     <a href="#" class="footer-logo">Numm<span>Studio</span></a>
-                    <p class="footer-text">We're a creative design agency passionate about transforming ideas into impactful visual experiences that help brands thrive in the digital world.</p>
+                    <p class="footer-text">We're a creative design agency passionate about transforming ideas into
+                        impactful visual experiences that help brands thrive in the digital world.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                        <a href="https://x.com/nummstudio" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com/nummstudio" class="social-link"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com/in/nummstudio" class="social-link"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://dribbble.com/nummstudio" class="social-link"><i
+                                class="fab fa-dribbble"></i></a>
                     </div>
                 </div>
                 <div>
@@ -379,10 +409,13 @@
             </div>
         </div>
     </footer>
-    
+
     <a href="#" class="back-to-top">
         <i class="fas fa-arrow-up"></i>
     </a>
     <script src="script.js"></script>
+    <script src="config.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
+
 </html>

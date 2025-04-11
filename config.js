@@ -1,0 +1,3 @@
+const EMAILJS_CONFIG = {
+    PUBLIC_KEY: 'FTjPZ4K2o8Dg4BQBb',
+};
