@@ -163,10 +163,10 @@ document.getElementById('contact-form').addEventListener('submit', async functio
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                name,
-                email,
-                subject,
-                message,
+                name : name,
+                email : email,
+                title : subject,
+                message : message,
                 recaptcha_response: recaptchaResponse
             })
         });
