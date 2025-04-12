@@ -152,6 +152,8 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         return;
     }
 
+    print(recaptcha_result);
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const subject = document.getElementById('subject').value;
@@ -185,4 +187,6 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         submitButton.innerHTML = originalButtonText;
         submitButton.disabled = false;
     }
+
+    print(emailjs_response.json());
 });
