@@ -133,6 +133,7 @@ header {
     height: 2em;
     margin-right: 0.1em;
 }
+
 .nav-links {
     display: flex;
     gap: 40px;
@@ -1003,7 +1004,6 @@ footer {
     box-shadow: 0 15px 25px rgba(255, 62, 108, 0.35);
 }
 
-/* Animations */
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -1022,7 +1022,6 @@ footer {
     animation: float 6s ease-in-out infinite;
 }
 
-/* Responsive styles */
 @media (max-width: 992px) {
     .nav {
         padding: 20px 40px;
@@ -1065,6 +1064,27 @@ footer {
     .contact-container {
         grid-template-columns: 1fr;
     }
+
+    .footer-newsletter .newsletter-input {
+        width: 100%;
+    }
+
+    .footer-newsletter .newsletter-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .footer-newsletter .newsletter-form {
+        flex-direction: column;
+    }
+
+    .back-to-top {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -1085,10 +1105,29 @@ footer {
     }
 }
 
-/* Loader inside the button */
+@media (max-width: 480px) {
+    .footer-newsletter p {
+        font-size: 14px;
+    }
+
+    .footer-newsletter .newsletter-input,
+    .footer-newsletter .newsletter-btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .back-to-top {
+        width: 35px;
+        height: 35px;
+        bottom: 15px;
+        right: 15px;
+        font-size: 16px;
+    }
+}
+
 .loader {
-    border: 2px solid #f3f3f3; /* Light grey */
-    border-top: 2px solid #3498db; /* Blue */
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
     border-radius: 50%;
     width: 14px;
     height: 14px;
@@ -1102,6 +1141,7 @@ footer {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
