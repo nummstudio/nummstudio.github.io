@@ -43,27 +43,6 @@ links.forEach(link => {
     });
 });
 
-window.addEventListener('load', () => {
-    const heroLines = document.querySelectorAll('.hero h1 .line');
-    const heroPara = document.querySelector('.hero p');
-    const heroBtn = document.querySelector('.hero .cta-btn');
-    gsap.to(heroPara, {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 1.2,
-        ease: 'power3.out'
-    });
-
-    gsap.to(heroBtn, {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 1.4,
-        ease: 'power3.out'
-    });
-});
-
 const slider = document.querySelector('.testimonial-slider');
 const slides = document.querySelectorAll('.testimonial-slide');
 const prevBtn = document.querySelector('.prev-btn');
@@ -132,58 +111,32 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-emailjs.init('FTjPZ4K2o8Dg4BQBb');;
-
-document.getElementById('contact-form').addEventListener('submit', async function (e) {
+emailjs.init('FTjPZ4K2o8Dg4BQBb');
+document.getElementById("contact-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
     const submitButton = document.querySelector('.submit-btn');
     const originalButtonText = submitButton.innerHTML;
-
-    // Add loader to the button
     submitButton.innerHTML = '<span class="loader"></span> Sending...';
     submitButton.disabled = true;
 
-    const recaptchaResponse = grecaptcha.getResponse();
-    if (!recaptchaResponse) {
-        alert('Please complete the reCAPTCHA to proceed.');
-        submitButton.innerHTML = originalButtonText; // Reset button text
-        submitButton.disabled = false;
-        return;
-    }
+    const templateParams = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      title: document.getElementById("subject").value,
+      message: document.getElementById("message").value
+    };
 
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-
-    try {
-        const response = await fetch('https://nummstudio.up.railway.app/api/contact/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name : name,
-                email : email,
-                title : subject,
-                message : message,
-                recaptcha_response: recaptchaResponse
-            })
-        });
-
-        if (response.ok) {
-            alert('Message sent successfully!');
-            document.getElementById('contact-form').reset(); // Reset the form
-            grecaptcha.reset(); // Reset reCAPTCHA
-        } else {
-            const errorData = await response.json();
-            alert(errorData.error || 'Failed to send message. Please try again later.');
-        }
-    } catch (error) {
-        alert('An error occurred. Please try again later.');
-    } finally {
-        // Reset button text and state
+    emailjs.send("service_ikbi12u", "template_96pk7pe", templateParams)
+      .then(function(response) {
+        alert("Message sent successfully!");
+        document.getElementById("contact-form").reset();
+      }, function(error) {
+        alert("Failed to send message. Please try again later.");
+        console.error("EmailJS error:", error);
+      })
+      .finally(() => {
         submitButton.innerHTML = originalButtonText;
         submitButton.disabled = false;
-    }
-});
+      });
+  });
